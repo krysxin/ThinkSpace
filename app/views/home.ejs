@@ -7,29 +7,33 @@
     <title>Document</title>
 
     <script src="//unpkg.com/3d-force-graph"></script>
-
-
 </head>
 <body>
     <h1>Thinkspace</h1>
     <div id="3d-graph"></div>
   
     <script>
-      // Random tree
-      const N = 1;
-      const gData = {
-        nodes: [...Array(N).keys()].map(i => ({ id: i })),
-        links: [...Array(N).keys()]
-          .filter(id => id)
-          .map(id => ({
-            source: id,
-            target: Math.round(Math.random() * (id-1))
-          }))
+      gData = {
+        "nodes": [ {"id": 0, "name": "dog", "content": "data/wanwan.html"},
+                   {"id": 1, "name": "cat", "content": "data/nyanya.html"},
+                   {"id": 2, "name": "bird", "content": "data/chunchun.html"} ],
+        "links": [ {"source": 0, "target": 1},
+                   {"source": 0, "target": 2} ]
       };
+
+      function add_node(node){
+        const {nodes, links} = Graph.graphData();
+        const id = nodes.length;
+        Graph.graphData({
+                nodes: [...nodes, {"id": id, "name": "unknown", "content": "unknown" }],
+                links: [...links, {"source": node.id, "target": id}]
+            });
+      }
   
       const Graph = ForceGraph3D()
         (document.getElementById('3d-graph'))
-          .graphData(gData);
+          .graphData(gData)
+          .onNodeClick(add_node);
     </script>
 </body>
 </html>
