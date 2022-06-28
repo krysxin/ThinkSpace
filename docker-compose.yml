@@ -4,10 +4,10 @@ services:
     build:
       context: .      # Dockerfile保存場所
       dockerfile: Dockerfile    # Dockerfileファイル名
-    image: app                  # イメージ名
-    container_name: app         # コンテナ名
+    image: node-express                  # イメージ名
+    container_name: thinkspace         # コンテナ名
     ports:                          # ポート接続
       - 5000:5000
     volumes:                        # mount workdir
-      - ./src:/src
+      - ./app:/app
     command: [sh, -c, npm install && nodemon index.js]
